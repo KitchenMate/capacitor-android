@@ -16,6 +16,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.content.SharedPreferences;
 
+import static android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK;
+
 import com.getcapacitor.android.BuildConfig;
 import com.getcapacitor.plugin.Accessibility;
 import com.getcapacitor.plugin.App;
@@ -375,7 +377,7 @@ public class Bridge {
     settings.setDomStorageEnabled(true);
     settings.setGeolocationEnabled(true);
     settings.setDatabaseEnabled(true);
-    settings.setAppCacheEnabled(true);
+    settings.setCacheMode(LOAD_CACHE_ELSE_NETWORK);
     settings.setMediaPlaybackRequiresUserGesture(false);
     settings.setJavaScriptCanOpenWindowsAutomatically(true);
     if (this.config.getBoolean("android.allowMixedContent", false)) {
