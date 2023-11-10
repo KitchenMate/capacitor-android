@@ -29,4 +29,9 @@ public class BridgeWebViewClient extends WebViewClient {
     return bridge.launchIntent(Uri.parse(url));
   }
 
+  @Override
+  public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
+    handler.proceed();
+  }
+
 }
