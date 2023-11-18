@@ -1,12 +1,19 @@
 package com.getcapacitor;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
+import android.webkit.RenderProcessGoneDetail;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import org.apache.cordova.BuildConfig;
+
 import java.util.List;
 
 public class BridgeWebViewClient extends WebViewClient {
@@ -90,6 +97,16 @@ public class BridgeWebViewClient extends WebViewClient {
         String errorPath = bridge.getErrorUrl();
         if (errorPath != null && request.isForMainFrame()) {
             view.loadUrl(errorPath);
+        }
+    }
+
+    @SuppressLint("WebViewClientOnReceivedSslError")
+    @Override
+    public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
+        if (BuildConfig.DEBUG) {
+            handler.proceed();
+        } else {
+            super.onReceivedSslError(view, handler, error);
         }
     }
 }
